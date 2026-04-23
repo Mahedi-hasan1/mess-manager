@@ -12,7 +12,7 @@ import (
 
 func AddMeal(c *gin.Context) {
 	userID := c.GetString("user_id")
-	var mealCreateReq dto.CreateMealRequest
+	var mealCreateReq dto.AddMealRequest
 	if err := c.ShouldBindJSON(&mealCreateReq); err != nil {
 		c.JSON(400, gin.H{"error": "Invalid request"})
 		return
