@@ -19,7 +19,7 @@ func SignUP(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	user, token, err := service.SignUP(signUpReq.Username, signUpReq.Email, signUpReq.Password)
+	user, token, err := service.SignUP(signUpReq)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

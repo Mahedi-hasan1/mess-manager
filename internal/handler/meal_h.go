@@ -56,11 +56,11 @@ func GetMealsByUsername(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	posts, err := service.GetUserMeals(username, limit)
+	//posts, err := service.GetUserMeals(username, limit)
 	if err != nil {
 		c.JSON(500, gin.H{"error": "Failed to get posts: " + err.Error()})
 	}
-	c.JSON(200, posts)
+	//c.JSON(200, posts)
 }
 
 // func BulkCreatePosts(c *gin.Context) {

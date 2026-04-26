@@ -2,7 +2,7 @@ package repository
 
 import (
 	"mess-manager/internal/db"
-	"mess-manager/internal/dto"
+	//"mess-manager/internal/dto"
 	"mess-manager/internal/model"
 )
 
@@ -21,22 +21,22 @@ func CreateMealType(mealType *model.MealType) error {
 	return nil
 }
 
-func GetMealsByUsername(username string, limit int) ([]dto.UserPostResponse, error) {
-	var posts []dto.UserPostResponse
+// func GetMealsByUsername(username string, limit int) ([]dto.UserPostResponse, error) {
+// 	var posts []dto.UserPostResponse
 
-	err := db.PgDb.Model(&model.Meal{}).
-		Select("posts.id", "user_id", "content", "image_urls", "like_count", "dislike_count", "comment_count", "posts.created_at", "posts.updated_at").
-		Joins("JOIN users ON posts.user_id = users.id").
-		Where("users.username = ?", username).
-		Order("posts.created_at DESC").
-		Limit(limit).
-		Find(&posts).Error
+// 	err := db.PgDb.Model(&model.Meal{}).
+// 		Select("posts.id", "user_id", "content", "image_urls", "like_count", "dislike_count", "comment_count", "posts.created_at", "posts.updated_at").
+// 		Joins("JOIN users ON posts.user_id = users.id").
+// 		Where("users.username = ?", username).
+// 		Order("posts.created_at DESC").
+// 		Limit(limit).
+// 		Find(&posts).Error
 
-	if err != nil {
-		return nil, err
-	}
-	return posts, nil
-}
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return posts, nil
+// }
 
 // func GetFeedPosts(followingIDs []string, seenPostIDs []string, limit int) ([]model.Post, error) {
 // 	var posts []model.Post

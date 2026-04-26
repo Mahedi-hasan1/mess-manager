@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"mess-manager/internal/model"
+	"mess-manager/internal/dto"
 	"mess-manager/internal/repository"
 	"strings"
 	"time"
@@ -13,12 +14,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func SignUP(username, email, password string) (*model.User, string, error) {
+func SignUP(signUpReq dto.CreateUserRequest) (*model.User, string, error) {
 	
 	//make lower case and replace space with "_"
-	username = strings.ToLower(username)
+	var username = strings.ToLower(signUpReq.Username)
 	username = strings.ReplaceAll(username, " ", "_")
-	email = strings.ToLower(email)
+	var email = strings.ToLower(signUpReq.Email)
 	existingUser, _ := repository.GetUser("", email, "")
 	if existingUser != nil {
 		return nil, "", errors.New("email already exists")
@@ -27,7 +28,7 @@ func SignUP(username, email, password string) (*model.User, string, error) {
 	if existingUser != nil {
 		return nil, "", errors.New("username already exists")
 	}
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(signUpReq.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, "", err
 	}
@@ -36,6 +37,10 @@ func SignUP(username, email, password string) (*model.User, string, error) {
 		Username:     username,
 		Email:        email,
 		PasswordHash: string(hashedPassword),
+		PhoneNumber: signUpReq.PhoneNumber,
+		ImageLink: signUpReq.ImageLink,
+		Status: 2,
+		Role:2,
 	}
 	err = repository.CreateUser(user)
 	if err != nil {

@@ -6,7 +6,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func ValidateCreateMeal(postReq *dto.CreateMealRequest, userID string) error {
+func ValidateCreateMeal(postReq *dto.AddMealRequest, userID string) error {
 	validate := validator.New()
 	 if err := validate.Struct(postReq); err != nil {
         return err
@@ -19,15 +19,15 @@ func ValidateCreateMeal(postReq *dto.CreateMealRequest, userID string) error {
 		return errors.New("user_id is required")
 	}
 
-	if postReq.Content == "" &&  len(postReq.ImageURLs) == 0 {
-		return errors.New("at least one of 'content' or 'image_urls' must be provided")
-	}
+	// if postReq.Content == "" &&  len(postReq.ImageURLs) == 0 {
+	// 	return errors.New("at least one of 'content' or 'image_urls' must be provided")
+	// }
 
-	for _, url := range postReq.ImageURLs {
-		if len(url) > 500 {
-			return errors.New("each image URL must not exceed 500 characters")
-		}
-	}
+	// for _, url := range postReq.ImageURLs {
+	// 	if len(url) > 500 {
+	// 		return errors.New("each image URL must not exceed 500 characters")
+	// 	}
+	// }
 	return nil
 }
 
