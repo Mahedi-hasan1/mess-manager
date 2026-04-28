@@ -41,7 +41,15 @@ func AutoMigrateModels() {
 		log.Fatal("failed to auto-migrate Meal Model: ", err)
 	} else if err := PgDb.AutoMigrate(&model.Expense{}); err != nil {
 		log.Fatal("failed to auto-migrate Expense Model: ", err)
-	} else {
+	}else if err := PgDb.AutoMigrate(&model.ExpenseType{}); err != nil {
+		log.Fatal("failed to auto-migrate Expense Model: ", err)
+	}else if err := PgDb.AutoMigrate(&model.MealType{}); err != nil {
+		log.Fatal("failed to auto-migrate Expense Model: ", err)
+	}else if err := PgDb.AutoMigrate(&model.Mess{}); err != nil {
+		log.Fatal("failed to auto-migrate Expense Model: ", err)
+	}else if err := PgDb.AutoMigrate(&model.MessMember{}); err != nil {
+		log.Fatal("failed to auto-migrate Expense Model: ", err)
+	}else {
 		log.Println("Database migrated successfully")
 	}
 }

@@ -39,8 +39,6 @@ func SignUP(signUpReq dto.CreateUserRequest) (*model.User, string, error) {
 		PasswordHash: string(hashedPassword),
 		PhoneNumber: signUpReq.PhoneNumber,
 		ImageLink: signUpReq.ImageLink,
-		Status: 2,
-		Role:2,
 	}
 	err = repository.CreateUser(user)
 	if err != nil {

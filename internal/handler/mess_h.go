@@ -6,6 +6,7 @@ import (
 	"mess-manager/internal/service"
 	"mess-manager/internal/validators"
 	"github.com/gin-gonic/gin"
+	"fmt"
 )
 func AddMessMemer(c *gin.Context) {
 	var memberReq dto.AddMessMemerRequest
@@ -13,7 +14,7 @@ func AddMessMemer(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
 		return
 	}
-	if err := validators.ValidateAddMessMemer(&memberReq); err != nil {
+	if err := validators.ValidateAddMessMember(&memberReq); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -22,4 +23,24 @@ func AddMessMemer(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusCreated, memberReq)
+}
+
+func CreateMess(c *gin.Context){
+	userId := c.GetString("user_id")
+	fmt.Println("user id : ", userId);
+	var messReq dto.CreateMessRequest
+	if err := c.ShouldBindJSON(&messReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+		return
+	}
+	if err := validators.ValidateCreateMess(&messReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	mess, err := service.CreateMess(messReq, userId);
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create mess: " + err.Error()})
+		return
+	}
+	c.JSON(http.StatusCreated, mess)
 }

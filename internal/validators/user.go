@@ -19,6 +19,9 @@ func ValidateCreateUser(userReq *dto.CreateUserRequest) error {
 	if strings.Contains(userReq.Username, "@") {
         return errors.New("username cannot contain '@'")
     }
+	if userReq.PhoneNumber != "" && !util.IsValidPhoneNumber(userReq.PhoneNumber) {
+		return errors.New("invalid phone number format")
+	}
 	return nil
 }
 

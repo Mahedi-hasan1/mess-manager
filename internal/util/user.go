@@ -2,6 +2,8 @@ package util
 
 import (
 	"github.com/go-playground/validator/v10"
+	"regexp"
+
 )
 
 func GetCustomValidationMessage(err error) string {
@@ -32,4 +34,10 @@ func GetCustomValidationMessage(err error) string {
 	}
 
 	return err.Error() // fallback to default message
+}
+
+func IsValidPhoneNumber(phone string) bool {
+	// accepts exactly 11 or 13 digits
+	matched, _ := regexp.MatchString(`^([0-9]{11}|[0-9]{13})$`, phone)
+	return matched
 }

@@ -2,14 +2,12 @@ package dto
 
 import "time"
 
-
-
 type CreateUserRequest struct {
-	Username    string `json:"username" validate:"required,min=3,max=50"`
-	Email       string `json:"email" validate:"email,max=100"`
-	PhoneNumber string `json:"phone_number" gorm:"uniqueIndex;not null;size:100"`
-	ImageLink   string `json:"imagelink"`
-	Password string `json:"password" validate:"required,min=4"` // Plain password in request
+	Username    string  `json:"username" validate:"required,min=3,max=50"`
+	Email       string  `json:"email" validate:"omitempty,email,max=100"`
+	PhoneNumber string `json:"phone_number" validate:"omitempty"`
+	ImageLink   string  `json:"imagelink"`
+	Password    string  `json:"password" validate:"required,min=4"`
 }
 type UserResponse struct {
 	ID             string    `json:"id"`

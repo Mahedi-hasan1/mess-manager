@@ -13,8 +13,15 @@ func CreateUser(user *model.User) error {
 }
 
 func GetUser(userId, email, username string) (*model.User, error) {
+
+	if(userId == "" && email =="" && username ==""){
+		return nil,nil;
+	}
+
 	var user model.User
-	query := db.PgDb.Model(&model.User{})
+	query := db.PgDb.Model(&model.User{}).
+		Preload("MessMembers").
+		Preload("MessMembers.Mess")
 
 	if userId != "" {
 		query = query.Where("id = ?", userId)
